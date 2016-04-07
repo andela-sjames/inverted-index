@@ -36,7 +36,6 @@ describe('Inverted Index', function(){
         var searchTerm;
         it('should return array indices for search term', function(){
             searchTerm = this.pageItem.searchIndex('destroy');
-            console.log(searchTerm);
             expect(searchTerm).toEqual(jasmine.any(Array));
             expect(searchTerm).toEqual([1,15]);
         });
