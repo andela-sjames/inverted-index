@@ -26,7 +26,7 @@ Index.prototype.createIndex = function(filePath) {
     returnedArray = this.readFile(filePath);
 
     returnedArray.forEach(function(arrayValue, id) {
-        returnedText = arrayValue.text.replace(".", " ").split(" ");
+        returnedText = arrayValue.text.replace(/[\.|,]/g, " ").split(" ");
 
         returnedText.forEach(function(textValue, idx){
 
@@ -41,8 +41,6 @@ Index.prototype.createIndex = function(filePath) {
                 indexDict[textValue] = [id, idx];
             }
         })
-
-
     })
 
     this.generatedIndex = indexDict;
@@ -62,5 +60,4 @@ Index.prototype.searchIndex = function(item) {
         return "Not found"
     } else return result
 }
-
 
