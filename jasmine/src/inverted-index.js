@@ -54,6 +54,7 @@ Index.prototype.getIndex = function() {
 
 
 Index.prototype.searchIndex = function(item) {
+    var item = item.toLowerCase();
     var result = this.getIndex()[item];
     if (typeof result === 'undefined') {
 
