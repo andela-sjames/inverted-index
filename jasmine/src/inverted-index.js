@@ -18,16 +18,15 @@ Index.prototype.readFile = function(filePath) {
 
 Index.prototype.createIndex = function(filePath) {
 
-    var uniqueTexts = []; //Stores unique texts
-    var posIndex = []; //Stores the index
+    var indexDict = {};
+    var uniqueTexts = [];
+    var posIndex = [];
 
     var returnedArray, returnedText;
     returnedArray = this.readFile(filePath);
 
     returnedArray.forEach(function(arrayValue, id) {
         returnedText = arrayValue.text.replace(".", " ").split(" ");
-        var id = id;
-        // console.log(returnedText);
 
         returnedText.forEach(function(textValue, idx){
 
@@ -35,20 +34,18 @@ Index.prototype.createIndex = function(filePath) {
 
             if (pos > -1) {
                 var index = posIndex[pos];
-                // console.log(index);
             } else {
                 uniqueTexts.push(textValue);
                 posIndex.push(idx);
+
+                indexDict[textValue] = [id, idx];
             }
         })
 
 
     })
 
-    this.generatedIndex = {
-    uniqueTexts: uniqueTexts,
-    textIndex: posIndex
-  };
+    this.generatedIndex = indexDict;
 }
 
 
@@ -59,14 +56,11 @@ Index.prototype.getIndex = function() {
 
 
 Index.prototype.searchIndex = function(item) {
+    var result = this.getIndex()[item];
+    if (typeof result === 'undefined') {
 
-  var itemIndex = this.getIndex().uniqueTexts.indexOf(item);
-
-  if (itemIndex === -1) {
-    return -1;
-  } else {
-    return this.getIndex().textIndex[itemIndex];
-  }
+        return "Not found"
+    } else return result
 }
 
 
