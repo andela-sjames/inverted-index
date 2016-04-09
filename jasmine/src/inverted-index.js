@@ -25,26 +25,27 @@ Index.prototype.createIndex = function(filePath) {
     var returnedArray, returnedText;
     returnedArray = this.readFile(filePath);
     returnedArray.forEach(function(dictValue, id) {
-        returnedText = dictValue.text.replace(/[\.|,|:]/g, " ").split(" ");
 
-        returnedText.forEach(function(textValue, idx){
+        for(var key in dictValue) {
+            returnedText = dictValue[key].toLowerCase().replace(/[\.|,|:]/g, " ").split(" ");
 
-            var pos = uniqueTexts.indexOf(textValue);
 
-            if (pos > -1) {
-                var index = posIndex[pos];
-                indexDict[textValue].push([id, idx])
+            returnedText.forEach(function(textValue, idx){
 
-            } else {
-                uniqueTexts.push(textValue);
-                posIndex.push(idx);
+                var pos = uniqueTexts.indexOf(textValue);
 
-                indexDict[textValue] = [[id, idx]];
-            }
-        })
+                if (pos > -1) {
+                    indexDict[textValue].push([id, idx])
+
+                } else {
+                    uniqueTexts.push(textValue);
+                    posIndex.push(idx);
+
+                    indexDict[textValue] = [[id, idx]];
+                }
+            })
+        }
     })
-
-    console.log(indexDict);
 
     this.generatedIndex = indexDict;
 }
@@ -62,9 +63,7 @@ Index.prototype.searchIndex = function(item) {
     if (typeof result === 'undefined') {
 
         return "Not found"
-    } else return result.forEach(function(value) {
-        console.log(value)
-    });
+    } else return result
 }
 
 
