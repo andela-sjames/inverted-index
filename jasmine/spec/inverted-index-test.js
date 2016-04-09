@@ -25,8 +25,8 @@ describe('Inverted Index', function(){
         it('should map the string keys to the correct objects', function(){
             response = this.pageItem.getIndex();
             expect(response).toEqual(jasmine.objectContaining({
-                'Alice': [0, 0],
-                'destroy': [1, 15]
+                'alice': [ [ 0, 0 ], [ 0, 0 ] ],
+                'destroy': [ [ 1, 15 ] ]
             }));
         })
     });
@@ -36,8 +36,9 @@ describe('Inverted Index', function(){
         var searchTerm;
         it('should return array indices for search term', function(){
             searchTerm = this.pageItem.searchIndex('destroy');
+            console.log(searchTerm);
             expect(searchTerm).toEqual(jasmine.any(Array));
-            expect(searchTerm).toEqual([1,15]);
+            expect(searchTerm).toEqual([ [ 1, 15 ] ]);
         });
     });
 

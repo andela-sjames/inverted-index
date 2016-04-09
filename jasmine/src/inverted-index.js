@@ -24,23 +24,27 @@ Index.prototype.createIndex = function(filePath) {
 
     var returnedArray, returnedText;
     returnedArray = this.readFile(filePath);
+    returnedArray.forEach(function(dictValue, id) {
 
-    returnedArray.forEach(function(arrayValue, id) {
-        returnedText = arrayValue.text.replace(/[\.|,]/g, " ").split(" ");
+        for(var key in dictValue) {
+            returnedText = dictValue[key].toLowerCase().replace(/[\.|,|:]/g, " ").split(" ");
 
-        returnedText.forEach(function(textValue, idx){
 
-            var pos = uniqueTexts.indexOf(textValue);
+            returnedText.forEach(function(textValue, idx){
 
-            if (pos > -1) {
-                var index = posIndex[pos];
-            } else {
-                uniqueTexts.push(textValue);
-                posIndex.push(idx);
+                var pos = uniqueTexts.indexOf(textValue);
 
-                indexDict[textValue] = [id, idx];
-            }
-        })
+                if (pos > -1) {
+                    indexDict[textValue].push([id, idx])
+
+                } else {
+                    uniqueTexts.push(textValue);
+                    posIndex.push(idx);
+
+                    indexDict[textValue] = [[id, idx]];
+                }
+            })
+        }
     })
 
     this.generatedIndex = indexDict;
